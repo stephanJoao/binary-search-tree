@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "ABB.h"
+#include "BST.h"
 
 using namespace std;
 
@@ -9,13 +9,13 @@ using namespace std;
 //TODO Remoção
 
 int main() {
-  cout << "Árvore Binária de Busca\n" << "Informe as chaves ou -1 para sair:\n";
-  ABB<int> abb;
-  int chave;
-  cin >> chave;
-  while(chave != -1) {
-    abb.insere(chave);
-    cin >> chave;
+  cout << "Binary Search Tree\n" << "Provide the keys you want to insert or -1 to leave insertion:\n";
+  BST<int> bst;
+  int key;
+  cin >> key;
+  while(key != -1) {
+    bst.insert(key);
+    cin >> key;
   }
-  abb.imprime();
+  bst.print();
 }
