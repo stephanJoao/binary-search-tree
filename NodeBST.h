@@ -11,6 +11,7 @@ class NodeBST {
 
     //Functions
     public:
+        NodeBST();
         NodeBST(TYPE val);
         ~NodeBST();
 
@@ -35,10 +36,22 @@ class NodeBST {
 };
 
 template <class TYPE>
+NodeBST<TYPE>::NodeBST() {
+    left = NULL;
+    right = NULL;
+}
+
+template <class TYPE>
 NodeBST<TYPE>::NodeBST(TYPE val) {
     key = val;
     left = NULL;
     right = NULL;
+}
+
+template <class TYPE>
+NodeBST<TYPE>::~NodeBST() {
+    delete left;
+    delete right;
 }
 
 #endif // NodeBST_H

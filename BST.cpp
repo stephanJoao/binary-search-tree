@@ -18,8 +18,7 @@ TYPE BST<TYPE>::getRoot() {
         return root->getKey();
     else {
         cout << "Empty tree!" << endl;
-        //TODO resolve this!!!!
-        return;
+        exit(1);
     }
 }
 
@@ -38,7 +37,7 @@ bool BST<TYPE>::auxSearch(NodeBST<TYPE>* n, TYPE val) {
 
 //BST search
 template <class TYPE>
-bool BST<TYPE>::search(TYPE val) {
+bool BST<TYPE>::searchBST(TYPE val) {
     return auxSearch(root, val);
 }
 
@@ -60,8 +59,94 @@ NodeBST<TYPE>* BST<TYPE>::auxInsert(NodeBST<TYPE>* n, TYPE val) {
 
 //BST insertion
 template <class TYPE>
-void BST<TYPE>::insert(TYPE val) {
+void BST<TYPE>::insertBST(TYPE val) {
     root = auxInsert(root, val);
+}
+
+//Leaf deletion
+template <class TYPE>
+NodeBST<TYPE>* BST<TYPE>::deleteLeaf(NodeBST<TYPE>* n) {
+    delete n;
+    return NULL;
+}
+
+//Node with one child deletion
+template <class TYPE>
+NodeBST<TYPE>* BST<TYPE>::deleteNode1Child(NodeBST<TYPE>* n) {
+    NodeBST<TYPE>* aux;
+    if(n->getLeft() == NULL) {
+        aux = n->getRight();
+        //delete n->getRight();
+    }
+    else {
+        aux = n->getLeft();
+        //delete n->getLeft();
+    }
+    delete n;
+    //cout << n->getKey();
+    return aux;
+}
+
+//Minor value
+template <class TYPE>
+NodeBST<TYPE>* BST<TYPE>::min(NodeBST<TYPE>* n) {
+    while (n->getLeft() != NULL)
+        n = n->getLeft();
+    return n;
+}
+
+//Auxiliary to delete
+template <class TYPE>
+NodeBST<TYPE>* BST<TYPE>::auxDelete(NodeBST<TYPE>* n, TYPE val) {
+    if(n == NULL) {
+        cout << "Value does not exist!" << endl;
+        return NULL;
+    }
+    else if(val < n->getKey()) //delete in the left subtree
+        n->setLeft(auxDelete(n->getLeft(), val));
+    else if(val > n->getKey()) //delete in the right subtree
+        n->setRight(auxDelete(n->getRight(), val));
+    else //found the node
+    {
+        if((n->getLeft() == NULL) && (n->getRight() == NULL))
+            n = deleteLeaf(n);
+        else if((n->getLeft() == NULL) || (n->getRight() == NULL)) {
+            NodeBST<TYPE>* aux;
+            if(n->getLeft() == NULL) {
+                cout << "É pra deletar da direita!" << endl;
+                aux = n->getRight();
+                //delete n->getRight();
+            }
+            else {
+                cout << "É pra deletar da esquerda!" << endl;
+                aux = n->getLeft();
+                //delete n->getLeft();
+            }
+            cout << "Deleta o nó" << endl;
+            delete n;
+            cout << "N recebe auxiliar" << endl;
+            n = aux;
+            //TODO The deletion is incorrect! 
+            //TODO The second time doesn't even enter the condition!!!
+            //n = deleteNode1Child(n);
+        }
+        else {
+            NodeBST<TYPE>* aux = min(n->getRight());
+
+            TYPE auxKey = aux->getKey();
+            n->setKey(auxKey);
+            aux->setKey(val);
+
+            n->setRight(auxDelete(n->getRight(),val));
+        }
+    }
+    return n;
+}
+
+//BST node removal
+template <class TYPE>
+void BST<TYPE>::deleteBST(TYPE val) {
+    root = auxDelete(root, val);
 }
 
 //Auxiliary to printing
@@ -82,4 +167,6 @@ void BST<TYPE>::print(){
     auxPrint("", root, false);
 }
 
+//Here is the explicit instantiation of the
+//template types I'll want and need
 template class BST<int>;

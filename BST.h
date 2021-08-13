@@ -19,14 +19,20 @@ class BST {
         TYPE getRoot();
         bool empty() { return (root == NULL); };
         
-        bool search(TYPE val);
-        void insert(TYPE val);
-        //void remove(TYPE val);
+        bool searchBST(TYPE val);
+        void insertBST(TYPE val);
+        void deleteBST(TYPE val);
+
         void print();
 
     private:
         bool auxSearch(NodeBST<TYPE> *n, TYPE val);
         NodeBST<TYPE>* auxInsert(NodeBST<TYPE> *n, TYPE val);
+        NodeBST<TYPE>* deleteLeaf(NodeBST<TYPE>* n);
+        NodeBST<TYPE>* deleteNode1Child(NodeBST<TYPE>* n);
+        NodeBST<TYPE>* min(NodeBST<TYPE>* n);
+        NodeBST<TYPE>* auxDelete(NodeBST<TYPE>* n, TYPE val);
+
         void auxPrint(string prefix, NodeBST<TYPE>* n, bool left);
 
     //Variables
