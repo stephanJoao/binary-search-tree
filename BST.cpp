@@ -35,6 +35,8 @@ bool BST<TYPE>::auxSearch(NodeBST<TYPE>* n, TYPE val) {
         return auxSearch(n->getLeft(), val);
 }
 
+//TODO Maybe switch it to iterative, or keep both!!
+
 //BST search
 template <class TYPE>
 bool BST<TYPE>::searchBST(TYPE val) {
